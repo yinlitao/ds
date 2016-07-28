@@ -24,7 +24,7 @@
       var serviceVersion = '1.0';
 
       if(includeVersionInTitle){
-        appName  += ' ' + serviceVersion;
+        serviceName  += ' ' + serviceVersion;
       }
 
       return{
