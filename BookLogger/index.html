@@ -10,13 +10,21 @@
 
     <div ng-controller='booksController as bookCtl'>
         <h1>Hello <i class="label label-primary">{{bookCtl.appName}}</i> </h1>
-
         <h1>Hello <i class="label label-primary">{{bookCtl.serviceName}}</i> </h1>
+
+        <h3>All Books</h3>
+        <div>
+          <ul>
+            <li ng-repeat="book in bookCtl.allBooks">{{book.title}} - {{book.author}}</li>
+           </ul>
+        </div>
 
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
     <script src="app/app.js"></script>
     <script src="app/books/booksController.js"></script>
+    <script src="app/services/dataService.js"></script>
+    <script src="app/services/loggerService.js"></script>
 
 </body>
 </html>
