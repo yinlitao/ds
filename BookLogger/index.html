@@ -19,12 +19,21 @@
            </ul>
         </div>
 
+        <h3>All Readers</h3>
+        <div>
+          <ul>
+            <li ng-repeat="reader in bookCtl.allReaders">{{reader.name}} - {{bookCtl.getBadge(reader.totalMinutesRead)}}</li>
+           </ul>
+        </div>
+
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
     <script src="app/app.js"></script>
     <script src="app/books/booksController.js"></script>
     <script src="app/services/dataService.js"></script>
     <script src="app/services/loggerService.js"></script>
+    <script src="app/services/constantService.js"></script>
+    <script src="app/services/badgeService.js"></script>
 
 </body>
 </html>
