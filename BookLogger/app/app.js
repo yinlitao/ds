@@ -1,48 +1,59 @@
 (function(){
-  var app = angular.module('app',[]);
+  var app = angular.module('app',['ngRoute']);
 
   app.config(function($provide){
 
+    //service books definition
     $provide.provider("books",['constants', function(constants){
       this.$get = function(){
 
         var appName = constants.APP_TITLE;
         var appDesc = constants.APP_DESCRIPTION;
+        var serviceVersion = constants.SERVCIE_VERSION;
+
+        if(includeVersionInTitle){
+          appName  += ' ' + serviceVersion;
+        }
 
         return {
           appName : appName,
           appDesc : appDesc
         };
       };
+
+      var includeVersionInTitle = false;
+      this.setIncludeVersionInTitle = function(value){
+          includeVersionInTitle = value;
+      };
+
     }]);
   });
 
-  //actually, the service will be added provider at the end of the service name
-  app.provider("testService", ['constants', function(constants){
-    this.$get=function(){
-      var serviceName = constants.SERVCIE_NAME;
-      var serviceVersion = constants.SERVCIE_VERSION;
+  app.config(['booksProvider', '$routeProvider', function(booksProvider,$routeProvider ){
 
-      if(includeVersionInTitle){
-        serviceName  += ' ' + serviceVersion;
-      }
+    //console.log('title from constants service: ' + constants.APP_TITLE);
+    //console.log(dataServiceProvider.$get);
 
-      return{
-        serviceName : serviceName
-      }
-    };
+    booksProvider.setIncludeVersionInTitle(true);
 
-    var includeVersionInTitle = false;
-    this.setIncludeVersionInTitle = function(value){
-        includeVersionInTitle = value;
-    };
-  }]);
+    $routeProvider
+      .when('/',{
+        templateUrl: '/app/templates/books.html',
+        controller:'BooksController',
+        controllerAs:'bookCtl'
+      })
+      .when('/AddBook', {
+        templateUrl: '/app/templates/addBook.html',
+        controller: 'AddBookController',
+        controllerAs:'addBook'
+      })
+      .when('/EditBook/:bookID',{
+        templateUrl: '/app/templates/editBook.html',
+        controller: 'EditBookController',
+        controllerAs: 'bookEditor'
+      })
+      .otherwise('/');
 
-  app.config(['testServiceProvider','constants','dataServiceProvider', function(testServiceProvider, constants, dataServiceProvider){
-    testServiceProvider.setIncludeVersionInTitle(true);
-
-    console.log('title from constants service: ' + constants.APP_TITLE);
-    console.log(dataServiceProvider.$get);
   }]);
 
 }());

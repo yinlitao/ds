@@ -1,13 +1,12 @@
 (function(){
 
-  angular.module('app').controller('booksController', ['books', 'testService', 'dataService', 'logger', 'badgeService',booksController]);
+  angular.module('app').controller('BooksController', ['books', 'dataService', 'logger', 'badgeService',BooksController]);
 
   //this is the constructor, where is the books coming from?
   //oh, from the app.js, name convention
-  function booksController(books, testService, dataService, logger, badgeService){
+  function BooksController(books, dataService, logger, badgeService){
     var vm = this;
     vm.appName = books.appName;
-    vm.serviceName = testService.serviceName;
     //vm.allBooks = dataService.getAllBooks();
     dataService.getAllBooks()
       .then(getBooksSuccess, null, getBooksNotification)
@@ -30,10 +29,10 @@
       console.log('getAllReaders has completed');
     }
 
-    
+
     vm.getBadge = badgeService.retrieveBadge;
 
-    logger.output('booksController as been created');
+    logger.output('BooksController as been created');
 
     function getBooksSuccess(books){
       vm.allBooks = books;
